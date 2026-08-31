@@ -4,7 +4,6 @@ pipeline {
     tools{
         nodejs "njs"
         dockerTool "docker"
-        string(name: 'sqscanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation')
     }
     stages {
         stage("CI"){
@@ -34,7 +33,12 @@ pipeline {
             }
         }
         stage("QA"){
-                
+            agent any
+
+            tools {
+                // Use the exact plugin class type string instead of the short name
+                string(name: 'MySonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation')
+            }    
             stages{
                 stage('validacion de codigo'){
                     steps{
