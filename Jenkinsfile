@@ -45,7 +45,7 @@ pipeline {
             stages{
                 stage('validacion de codigo'){
                     steps{
-                        withSonarQubeEnv('sqserver'){
+                        withSonarQubeEnv('sonarq-server'){
                             sh 'sonar-scanner'
                         }
                     }
