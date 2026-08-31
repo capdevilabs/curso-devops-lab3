@@ -4,7 +4,7 @@ pipeline {
     tools{
         nodejs "njs"
         dockerTool "docker"
-        hudson.plugins.sonar.SonarRunnerInstallation "sqscanner"
+        
     }
     stages {
         stage("CI"){
@@ -34,7 +34,12 @@ pipeline {
             }
         }
         stage("QA"){
-                
+            agent{
+                docker{
+                    image 'sonarsource/sonar-scanner-cli:latest'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }    
             stages{
                 stage('validacion de codigo'){
                     steps{
