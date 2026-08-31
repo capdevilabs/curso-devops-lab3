@@ -101,7 +101,7 @@ pipeline {
                                 error("APP_SEMANTIC_VERSION no definida en el stage anterior")
                             }
 
-                            docker.withRegistry('https://docker.io', 'dh-credencial') {
+                            docker.withRegistry('https://index.docker.io/v1/', 'dh-credencial') {
                                 sh "docker tag ${env.IMAGE_NAME}:latest ${env.DH_REPO}:latest"
                                 sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.BUILD_NUMBER}"
                                 sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
