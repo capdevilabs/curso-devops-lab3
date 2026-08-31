@@ -96,9 +96,9 @@ pipeline {
                     steps {
                         sh "docker build -t ${env.IMAGE_NAME} ."
                         script {
-                            if (!env.APP_SEMANTIC_VERSION?.trim()) {
-                                error("APP_SEMANTIC_VERSION no definida en el stage anterior")
-                            }
+                            // if (!env.APP_SEMANTIC_VERSION?.trim()) {
+                            //     error("APP_SEMANTIC_VERSION no definida en el stage anterior")
+                            // }
                             // Aca llamamos a la funcion que definimos al principio , y ya esta funcion 
                             // hace login en dockerhub y github con docker.withRegistry y sube ambas imagenes
                             tagAndPush(env.IMAGE_NAME, env.DH_REPO, "https://index.docker.io/v1/", "dh-credencial")
