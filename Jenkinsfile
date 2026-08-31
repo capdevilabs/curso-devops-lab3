@@ -95,7 +95,7 @@ pipeline {
             stages{
                 stage("Build dockerfile") {
                     steps {
-                        sh "docker build ."
+                        sh "docker build --no-cache -t ${env.IMAGE_NAME} ."
                         script {
                             if (!env.APP_SEMANTIC_VERSION?.trim()) {
                                 error("APP_SEMANTIC_VERSION no definida en el stage anterior")
