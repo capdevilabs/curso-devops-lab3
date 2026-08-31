@@ -42,7 +42,7 @@ pipeline {
                 stage("validacion de codigo"){
                     steps{
                         withSonarQubeEnv('sonarqube'){
-                            "${SCANNER_HOME}/bin/sonar-scanner"
+                            '${SCANNER_HOME}/bin/sonar-scanner'
                         }
                     }
                 }
