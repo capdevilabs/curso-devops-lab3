@@ -21,7 +21,7 @@ pipeline {
                 }
                 stage("Ejecutar tests"){
                     steps {
-                        sh 'npm run test'
+                        sh 'npm run test -- --coverage'
                     }
                 }
                 stage("Build"){
@@ -33,16 +33,19 @@ pipeline {
             }
         }
         stage("QA"){
-            agent any
-            environment {
-                // "sonar-scanner-tool" must match the EXACT name configured in Global Tool Configuration
-                SCANNER_HOME = tool 'sqscanner' 
+            agent {
+                docker{
+                    image 'sonarsource/sonar-scanner-cli'
+                    args '--network'
+                }
+
+            
             }
             stages{
                 stage("validacion de codigo"){
                     steps{
                         withSonarQubeEnv('sonarqube'){
-                            '${SCANNER_HOME}/bin/sonar-scanner'
+                            'sh sonar-scanner'
                         }
                     }
                 }
