@@ -94,8 +94,8 @@ pipeline {
                 stage("Build dockerfile") {
                     agent {
                         docker {
-                            image 'docker:24'
-                            args '--network devops-infra_default'
+                            image 'node:24'
+                            //args '--network devops-infra_default'
                             reuseNode true
                         }
                     }   
