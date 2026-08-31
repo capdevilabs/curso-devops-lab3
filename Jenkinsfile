@@ -102,8 +102,14 @@ pipeline {
                             }
                             // Aca llamamos a la funcion que definimos al principio , y ya esta funcion 
                             // hace login en dockerhub y github con docker.withRegistry y sube ambas imagenes
-                            tagAndPush(env.IMAGE_NAME, env.DH_REPO, "https://docker.io", "dh-credencial")
-                            tagAndPush(env.IMAGE_NAME, env.GHCR_REPO, "https://ghcr.io", "gh-credencial")
+                            //tagAndPush(env.IMAGE_NAME, env.DH_REPO, "https://docker.io", "dh-credencial")
+                            //tagAndPush(env.IMAGE_NAME, env.GHCR_REPO, "https://ghcr.io", "gh-credencial")
+                            sh "docker tag ${env.IMAGE_NAME}:latest ${env.DH_REPO}:latest"
+                            sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.BUILD_NUMBER}"
+                            sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
+                            sh "docker push ${env.DH_REPO}:latest"
+                            sh "docker push ${env.DH_REPO}:${env.BUILD_NUMBER}"
+                            sh "docker push ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
                         }
                     }
                 } 
