@@ -22,6 +22,7 @@ pipeline {
         K8S_NAMESPACE  = "acapdevila"
         K8S_DEPLOYMENT = "acapdevila-deployment"
         K8S_CONTAINER  = "contenedor-acapdevila"
+        APP_SEMANTIC_VERSION = "1.0.0"
     }
     
     stages {
