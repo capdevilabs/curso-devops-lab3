@@ -32,38 +32,7 @@ pipeline {
 
             }
         }
-        stage("QA"){
-            agent {
-                docker{
-                    image 'sonarsource/sonar-scanner-cli'
-                   
-                }
-
-            
-            }
-            stages{
-                stage("validacion de codigo"){
-                    steps{
-                        withSonarQubeEnv('sonarqube'){
-                            'sh sonar-scanner'
-                        }
-                    }
-                }
-            }
-
-        }
-
-
-
-
-
-
-        stage("Imagen Docker"){
-            steps {
-                sh 'docker build -t curso-devops-lab3:latest'
-                sh 'docker build -t curso-devops-lab3:1.0.0'
-            }
-        }
+        
 
     }
 }
