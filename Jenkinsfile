@@ -17,7 +17,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "curso-devops-lab3"
-        DH_REPO    = "capdevila/curso-devops-lab3"
+        DH_REPO    = "docker.io/capdevila/curso-devops-lab3"
         GHCR_REPO  = "ghcr.io/capdevilabs/curso-devops-lab3"
         K8S_NAMESPACE  = "acapdevila"
         K8S_DEPLOYMENT = "acapdevila-deployment"
