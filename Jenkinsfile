@@ -101,7 +101,7 @@ pipeline {
                             }
 
                             docker.withRegistry('https://docker.io', 'dh-credencial') {
-                                sh "docker tag ${env.IMAGE_NAME}:latest ${env.DH_REPO}:latest"
+                                sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:latest"
                                 sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.BUILD_NUMBER}"
                                 sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
                                 sh "docker push ${env.DH_REPO}:latest"
