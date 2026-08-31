@@ -1,14 +1,15 @@
 pipeline {
     agent any
 
-    tools{
-        nodejs "njs"
-        dockerTool "docker"
-        
-    }
+    
     stages {
         stage("CI"){
-            
+            agent {
+                docker{
+                    image 'node:24'
+                    reuseNode true 
+                }
+            }   
             stages {
                 stage("Instalar dependencias"){
                     steps {
@@ -30,11 +31,7 @@ pipeline {
                         sh 'npm run build'
                     }
                 }
-                stage("imagen docker"){
-                    steps {
-                        sh 'docker build -t curso-devops-lab3:latest .'
-                    }
-                }   
+                
 
             }
         }
