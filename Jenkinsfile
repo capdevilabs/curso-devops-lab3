@@ -47,15 +47,7 @@ pipeline {
 
             
             }
-            stages{
-                stage("validacion de codigo"){
-                    steps{
-                        withSonarQubeEnv('sonarqube'){
-                            'sh sonar-scanner'
-                        }
-                    }
-                }
-            }
+            
 
         }
 
@@ -64,12 +56,6 @@ pipeline {
 
 
 
-        stage("Imagen Docker"){
-            steps {
-                sh 'docker build -t curso-devops-lab3:latest'
-                sh 'docker build -t curso-devops-lab3:1.0.0'
-            }
-        }
-
+        
     }
 }
