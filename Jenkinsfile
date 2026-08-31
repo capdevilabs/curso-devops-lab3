@@ -19,9 +19,9 @@ pipeline {
         IMAGE_NAME = "curso-devops-lab3"
         DH_REPO    = "capdevila/curso-devops-lab3"
         GHCR_REPO  = "ghcr.io/capdevilabs/curso-devops-lab3"
-        K8S_NAMESPACE  = "curso-devops"
-        K8S_DEPLOYMENT = "curso-devops-deployment"
-        K8S_CONTAINER  = "contenedor-curso-devops"
+        K8S_NAMESPACE  = "acapdevila"
+        K8S_DEPLOYMENT = "acapdevila-deployment"
+        K8S_CONTAINER  = "contenedor-acapdevila"
     }
     
     stages {
