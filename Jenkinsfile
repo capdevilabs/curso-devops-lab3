@@ -1,13 +1,14 @@
 pipeline {
-    agent any
-
-    tools {
-        nodejs "njs"
-        dockerTool "docker"
-    }
+    
     
     stages {
         stage("CI"){
+            agent {
+                docker {
+                    image "node:24"
+                    reuseNode true
+                }
+            }
             stages{
                 stage("Instalar dependencias"){
                     steps {
