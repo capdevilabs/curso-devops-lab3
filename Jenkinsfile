@@ -4,7 +4,6 @@ pipeline {
     tools {
         nodejs "njs"
         dockerTool "docker"
-        SonarQube "sqscanner"
     }
     
     stages {
@@ -34,6 +33,9 @@ pipeline {
             }
         }
         stage("QA"){
+            tools{
+                sonar "sqscanner"
+            }
             stages{
                 stage("validacion de codigo"){
                     steps{
