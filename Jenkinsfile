@@ -3,29 +3,53 @@ pipeline {
 
     tools {
         nodejs "njs"
+        docker "docker"
     }
     
     stages {
-        stage("Instalar dependencias"){
-            steps {
-                sh 'npm install'
+        stage("CI"){
+            stages{
+                stage("Instalar dependencias"){
+                    steps {
+                        sh 'npm install'
+                    }
+                }
+                stage("Ejecutar linter"){
+                    steps {
+                        sh 'npm run lint'
+                    }
+                }
+                stage("Ejecutar tests"){
+                    steps {
+                        sh 'npm run test'
+                    }
+                }
+                stage("Build"){
+                    steps {
+                        sh 'npm run build'
+                    }
+                }
+
             }
         }
-        stage("Ejecutar linter"){
-            steps {
-                sh 'npm run lint'
+        stage("QA"){
+            stages{
+                stage("validacion de codigo"){
+                    steps{
+                        withSonarQubeEnv('sonarqube'){
+                            sh 'sonar-scanner'
+                        }
+                    }
+                }
             }
+
         }
-        stage("Ejecutar tests"){
-            steps {
-                sh 'npm run test'
-            }
-        }
-        stage("Build"){
-            steps {
-                sh 'npm run build'
-            }
-        }
+
+
+
+
+
+
         stage("Imagen Docker"){
             steps {
                 sh 'docker build -t curso-devops-lab3:latest'
