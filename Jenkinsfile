@@ -4,7 +4,7 @@ pipeline {
     tools {
         nodejs "njs"
         dockerTool "docker"
-        sonarqube "sqscanner"
+        sonar "sqscanner"
     }
     
     stages {
