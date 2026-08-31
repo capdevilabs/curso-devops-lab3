@@ -2,12 +2,7 @@ pipeline {
     agent any
     agent label docker
 
-    agent {
-        docker {
-            image "node:24"
-            reuseNode true
-        }
-    }
+    
     stages {
         stage("Instalar dependencias"){
             steps {
