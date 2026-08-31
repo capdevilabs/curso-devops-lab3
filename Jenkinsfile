@@ -37,6 +37,7 @@ pipeline {
             agent{
                 docker{
                     image 'sonarsource/sonar-scanner-cli:latest'
+                    reuseNode true 
                 }
             }    
             stages{
