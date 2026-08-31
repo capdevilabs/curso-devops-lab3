@@ -4,6 +4,7 @@ pipeline {
     tools{
         nodejs "njs"
         dockerTool "docker"
+        sonarScanner 'sqscanner'
     }
     stages {
         stage("CI"){
@@ -30,6 +31,31 @@ pipeline {
                     }
                 }
 
+            }
+        }
+        stage("QA"){
+                
+            stages{
+                stage('validacion de codigo'){
+                    steps{
+                        withSonarQubeEnv('sonarqube'){
+                            sh 'sonar-scanner'
+                        }
+                    }
+                }
+                stage('Validacion de puerta de calidad'){
+                    options{
+                        timeout(time: 1, unit: "MINUTES")
+                    }
+                    steps{
+                        script{
+                            def qualityGate = waitForQualityGate(); 
+                            if(qualityGate.status != 'OK'){
+                                error "La puerta de calidad ha fallado ${qualityGate.status}"
+                            }
+                        }
+                    }
+                }
             }
         }
         
