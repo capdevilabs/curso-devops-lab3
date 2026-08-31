@@ -1,19 +1,13 @@
 pipeline {
     agent any
 
-    environment {
-        // Appends common Docker installation paths to the pipeline environment
-        PATH = "/usr/local/bin:/usr/bin:/bin:${env.PATH}"
+    tools{
+        nodejs "njs"
+        dockerTool "docker"
     }
     stages {
         stage("CI"){
-            agent {
-                docker {
-                    image "node:24"
-                    reuseNode true
-                   
-                }
-            }
+            
             stages {
                 stage("Instalar dependencias"){
                     steps {
