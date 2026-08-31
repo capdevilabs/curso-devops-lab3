@@ -33,7 +33,11 @@ pipeline {
             }
         }
         stage("QA"){
-            
+            agent any
+            environment {
+                // "sonar-scanner-tool" must match the EXACT name configured in Global Tool Configuration
+                SCANNER_HOME = tool 'sqscanner' 
+            }
             stages{
                 stage("validacion de codigo"){
                     steps{
