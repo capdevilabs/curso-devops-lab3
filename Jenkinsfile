@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    agent label principal
+    agent label docker
 
     agent {
         docker {
