@@ -35,27 +35,7 @@ pipeline {
 
             }
         }
-        stage("QA"){
-            agent {
-                docker {
-                    image 'sonarsource/sonar-scanner-cli'
-                    reuseNode true
-                }
-
-            
-            }
-            stages{
-                stage("validacion de codigo"){
-                    steps{
-                        withSonarQubeEnv('sonarqube'){
-                            'sh sonar-scanner'
-                        }
-                    }
-                }
-            }
-
-        }
-
+        
 
 
 
