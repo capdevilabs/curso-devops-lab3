@@ -1,17 +1,15 @@
-def tagAndPush(String localImage, String repo, String registry, String credential) {
+// def tagAndPush(String localImage, String repo, String registry, String credential) {
 
-    docker.withRegistry(registry, credential) {
-        sh "docker tag ${localImage}:latest ${repo}:latest"
-        sh "docker tag ${localImage} ${repo}:${env.BUILD_NUMBER}"
-        sh "docker tag ${localImage} ${repo}:${env.APP_SEMANTIC_VERSION}"
-        sh "docker push ${repo}:latest"
-        sh "docker push ${repo}:${env.BUILD_NUMBER}"
-        sh "docker push ${repo}:${env.APP_SEMANTIC_VERSION}"
-    }
+//     docker.withRegistry(registry, credential) {
+//         sh "docker tag ${localImage}:latest ${repo}:latest"
+//         sh "docker tag ${localImage} ${repo}:${env.BUILD_NUMBER}"
+//         sh "docker tag ${localImage} ${repo}:${env.APP_SEMANTIC_VERSION}"
+//         sh "docker push ${repo}:latest"
+//         sh "docker push ${repo}:${env.BUILD_NUMBER}"
+//         sh "docker push ${repo}:${env.APP_SEMANTIC_VERSION}"
+//     }
 
-}
-
-
+// }
 pipeline {
     agent any
 
@@ -94,6 +92,13 @@ pipeline {
         stage("CD") {
             stages{
                 stage("Build dockerfile") {
+                    agent {
+                        docker {
+                            image 'docker:24'
+                            args '--network devops-infra_default'
+                            reuseNode true
+                        }
+                    }   
                     steps {
                         sh "docker build --no-cache -t ${env.IMAGE_NAME} ."
                         script {
