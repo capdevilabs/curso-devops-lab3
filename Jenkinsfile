@@ -1,5 +1,9 @@
 pipeline {
     agent any
+
+    tools {
+        nodejs "njs"
+    }
     
     stages {
         stage("Instalar dependencias"){
