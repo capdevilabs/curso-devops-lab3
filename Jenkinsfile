@@ -2,7 +2,7 @@ def tagAndPush(String localImage, String repo, String registry, String credentia
 
     docker.withRegistry(registry, credential) {
         sh "docker tag ${localImage}:latest ${repo}:latest"
-        sh "docker tag ${localImage}:${env.BUILD_NUMBER} ${repo}:${env.BUILD_NUMBER}"
+        sh "docker tag ${localImage} ${repo}:${env.BUILD_NUMBER}"
         sh "docker tag ${localImage} ${repo}:${env.APP_SEMANTIC_VERSION}"
         sh "docker push ${repo}:latest"
         sh "docker push ${repo}:${env.BUILD_NUMBER}"
