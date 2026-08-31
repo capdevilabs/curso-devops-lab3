@@ -37,7 +37,6 @@ pipeline {
             agent{
                 docker{
                     image 'sonarsource/sonar-scanner-cli:latest'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }    
             stages{
