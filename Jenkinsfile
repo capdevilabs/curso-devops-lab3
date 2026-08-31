@@ -4,7 +4,7 @@ pipeline {
     tools{
         nodejs "njs"
         dockerTool "docker"
-        sonarScanner 'sqscanner'
+        string(name: 'sqscanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation')
     }
     stages {
         stage("CI"){
