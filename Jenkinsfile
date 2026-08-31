@@ -92,15 +92,9 @@ pipeline {
         stage("CD") {
             stages{
                 stage("Build dockerfile") {
-                    agent {
-                        docker {
-                            image 'node:24'
-                            //args '--network devops-infra_default'
-                            reuseNode true
-                        }
-                    }   
+                    
                     steps {
-                        sh "docker build --no-cache -t ${env.IMAGE_NAME} ."
+                        sh 'docker build --no-cache -t ${env.IMAGE_NAME} .'
                         script {
                             if (!env.APP_SEMANTIC_VERSION?.trim()) {
                                 error("APP_SEMANTIC_VERSION no definida en el stage anterior")
@@ -109,12 +103,12 @@ pipeline {
                             // hace login en dockerhub y github con docker.withRegistry y sube ambas imagenes
                             //tagAndPush(env.IMAGE_NAME, env.DH_REPO, "https://docker.io", "dh-credencial")
                             //tagAndPush(env.IMAGE_NAME, env.GHCR_REPO, "https://ghcr.io", "gh-credencial")
-                            sh "docker tag ${env.IMAGE_NAME}:latest ${env.DH_REPO}:latest"
-                            sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.BUILD_NUMBER}"
-                            sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
-                            sh "docker push ${env.DH_REPO}:latest"
-                            sh "docker push ${env.DH_REPO}:${env.BUILD_NUMBER}"
-                            sh "docker push ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
+                            sh 'docker tag ${env.IMAGE_NAME}:latest ${env.DH_REPO}:latest'
+                            sh 'docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.BUILD_NUMBER}'
+                            sh 'docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}'
+                            sh 'docker push ${env.DH_REPO}:latest'
+                            sh 'docker push ${env.DH_REPO}:${env.BUILD_NUMBER}'
+                            sh 'docker push ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}'
                         }
                     }
                 } 
