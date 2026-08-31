@@ -33,9 +33,7 @@ pipeline {
             }
         }
         stage("QA"){
-            tools{
-                sonar "sqscanner"
-            }
+            
             stages{
                 stage("validacion de codigo"){
                     steps{
