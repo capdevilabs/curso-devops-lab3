@@ -1,6 +1,6 @@
 pipeline {
-    
     agent any
+
     
     stages {
         stage("CI"){
@@ -8,9 +8,10 @@ pipeline {
                 docker {
                     image "node:24"
                     reuseNode true
+                   
                 }
             }
-            stages{
+            stages {
                 stage("Instalar dependencias"){
                     steps {
                         sh 'npm install'
@@ -34,7 +35,33 @@ pipeline {
 
             }
         }
-        
+        stage("QA"){
+            agent {
+                docker {
+                    image 'sonarsource/sonar-scanner-cli'
+                    reuseNode true
+                }
+
+            
+            }
+            stages{
+                stage("validacion de codigo"){
+                    steps{
+                        withSonarQubeEnv('sonarqube'){
+                            'sh sonar-scanner'
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+
+
+
+
+       
 
     }
 }
