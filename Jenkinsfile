@@ -1,15 +1,15 @@
-// def tagAndPush(String localImage, String repo, String registry, String credential) {
+def tagAndPush(String localImage, String repo, String registry, String credential) {
 
-//     docker.withRegistry(registry, credential) {
-//         sh "docker tag ${localImage}:latest ${repo}:latest"
-//         sh "docker tag ${localImage} ${repo}:${env.BUILD_NUMBER}"
-//         sh "docker tag ${localImage} ${repo}:${env.APP_SEMANTIC_VERSION}"
-//         sh "docker push ${repo}:latest"
-//         sh "docker push ${repo}:${env.BUILD_NUMBER}"
-//         sh "docker push ${repo}:${env.APP_SEMANTIC_VERSION}"
-//     }
+    docker.withRegistry(registry, credential) {
+        sh "docker tag ${localImage}:latest ${repo}:latest"
+        sh "docker tag ${localImage} ${repo}:${env.BUILD_NUMBER}"
+        sh "docker tag ${localImage} ${repo}:${env.APP_SEMANTIC_VERSION}"
+        sh "docker push ${repo}:latest"
+        sh "docker push ${repo}:${env.BUILD_NUMBER}"
+        sh "docker push ${repo}:${env.APP_SEMANTIC_VERSION}"
+    }
 
-// }
+}
 pipeline {
     agent any
 
@@ -101,25 +101,12 @@ pipeline {
                                 error("APP_SEMANTIC_VERSION no definida en el stage anterior")
                             }
 
-                            docker.withRegistry('https://index.docker.io/v1/', 'dh-credencial') {
-                                sh "docker tag ${env.IMAGE_NAME}:latest ${env.DH_REPO}:latest"
-                                sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.BUILD_NUMBER}"
-                                sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
-                                sh "docker push ${env.DH_REPO}:latest"
-                                sh "docker push ${env.DH_REPO}:${env.BUILD_NUMBER}"
-                                sh "docker push ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
-                                
-                            }
+                            
                             // Aca llamamos a la funcion que definimos al principio , y ya esta funcion 
                             // hace login en dockerhub y github con docker.withRegistry y sube ambas imagenes
-                            //tagAndPush(env.IMAGE_NAME, env.DH_REPO, "https://docker.io", "dh-credencial")
-                            //tagAndPush(env.IMAGE_NAME, env.GHCR_REPO, "https://ghcr.io", "gh-credencial")
-                            // sh "docker tag ${env.IMAGE_NAME}:latest ${env.DH_REPO}:latest"
-                            // sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.BUILD_NUMBER}"
-                            // sh "docker tag ${env.IMAGE_NAME} ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
-                            // sh "docker push ${env.DH_REPO}:latest"
-                            // sh "docker push ${env.DH_REPO}:${env.BUILD_NUMBER}"
-                            // sh "docker push ${env.DH_REPO}:${env.APP_SEMANTIC_VERSION}"
+                            tagAndPush(env.IMAGE_NAME, env.DH_REPO, "https://index.docker.io/v1/", "dh-credencial")
+                            tagAndPush(env.IMAGE_NAME, env.GHCR_REPO, "https://ghcr.io", "gh-credencial")
+                            
                         }
                     }
                 } 
